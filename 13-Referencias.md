@@ -33,7 +33,7 @@ Uma seleção de livros populares e bem conceituados para iniciantes e para quem
 * BARRY, Paul. **Use a Cabeça! Python**: Um guia para iniciantes baseado no cérebro. 2. ed. Rio de Janeiro: Alta Books, 2018.
     *(Parte da série "Head First", conhecida por seu estilo visual e abordagem de aprendizado diferenciada).*
 
-## Recursos Online Adicionais (Não formatados como ABNT)
+## Recursos Online Adicionais
 
 Além da documentação oficial e livros, a web oferece muitos recursos valiosos:
 
