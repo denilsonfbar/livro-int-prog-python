@@ -90,7 +90,7 @@ O `>>>` é o prompt, esperando seu comando. Experimente digitar:
 >>> 2 + 2
 4
 >>> print("Olá, Mundo!")
-Olá, interpretador!
+Olá, Mundo!
 >>> exit()
 ```
 
