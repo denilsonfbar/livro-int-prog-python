@@ -107,7 +107,7 @@ Representam números inteiros, positivos ou negativos, sem parte decimal.
 
  ```python
 idade = 30
-ano = -2024
+saldo_itens = -123
 quantidade_itens = 0
 populacao_mundial = 8000000000 # Inteiros podem ser bem grandes
 
@@ -346,7 +346,7 @@ mensagem = "Seu número da sorte é: " + str(numero_sorte) # Converte int para s
 print(mensagem)
 
 # Convertendo número para booleano
-print(bool(idade_int)) # Se idade_int for > 0, será True
+print(bool(idade_int)) # Se idade_int for != 0, será True
  ```
 
 **Cuidado com Erros:** Se você tentar converter uma string que não representa um número válido para `int()` ou `float()`, o Python gerará um erro chamado `ValueError`.
