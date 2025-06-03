@@ -107,7 +107,7 @@ A sintaxe é:
     * A parte do `if` funciona como antes.
     * A palavra-chave `else` é seguida por dois-pontos (`:`). Ela **não** tem uma condição própria, pois representa o caso contrário da condição do `if`.
     * O bloco de código sob o `else` também deve ser indentado.
-    * Importante: Ou o bloco do `if` é executado, ou o bloco do `else` é executado, mas **nunca ambos**.
+    * Importante: Ou o bloco do `if` é executado, ou o bloco do `else` é executado, mas **nunca ambos**`.
 
 **Exemplo Prático:**
  ```python
@@ -149,23 +149,23 @@ O operador `and` retorna `True` somente se **ambas** as condições (à sua esqu
 | `False`  | `True`   | `False`                       |
 | `False`  | `False`  | `False`                       |
 
-**Exemplo com `and`:**
-Para uma pessoa poder dirigir, ela precisa ser maior de 18 anos **E** possuir carteira de motorista.
+**Exemplo com `and` (Revisado):**
+Para ter acesso a uma área restrita de um evento online, um usuário precisa ser assinante premium **E** ter um código de acesso especial.
  ```python
-idade = int(input("Qual sua idade? "))
-tem_carteira_str = input("Você tem carteira de motorista? (sim/nao): ")
+assinante_premium_str = input("Você é assinante premium? (sim/nao): ").lower()
+codigo_acesso_str = input("Você possui o código de acesso especial? (sim/nao): ").lower()
 
-# Convertendo a resposta da carteira para booleano de forma simples
-possui_carteira = tem_carteira_str.lower() == "sim" # .lower() converte para minúsculo
+eh_premium = assinante_premium_str == "sim"
+tem_codigo = codigo_acesso_str == "sim"
 
-if idade >= 18 and possui_carteira:
-    print("Você pode dirigir legalmente!")
+if eh_premium and tem_codigo:
+    print("Acesso à área restrita concedido! Aproveite o conteúdo exclusivo.")
 else:
-    print("Você NÃO pode dirigir legalmente.")
-    if idade < 18:
-        print("Motivo: Você é menor de idade.")
-    if not possui_carteira: # Veremos o 'not' em breve
-        print("Motivo: Você não possui carteira de motorista.")
+    print("Desculpe, acesso negado à área restrita.")
+    if not eh_premium:
+        print("Motivo: Assinatura premium não detectada.")
+    if not tem_codigo:
+        print("Motivo: Código de acesso especial não fornecido ou inválido.")
  ```
 
 ### Operador `or` (OU)
@@ -179,18 +179,18 @@ O operador `or` retorna `True` se **pelo menos uma** das condições (à sua esq
 | `False`  | `False`  | `False`                      |
 
 **Exemplo com `or`:**
-Você pode descansar se for final de semana **OU** se for um feriado.
+Você pode obter um desconto na loja se for estudante **OU** se for seu aniversário.
  ```python
-dia_str = input("Hoje é final de semana? (sim/nao): ")
-feriado_str = input("Hoje é feriado? (sim/nao): ")
+estudante_str = input("Você é estudante? (sim/nao): ").lower()
+aniversario_str = input("Hoje é seu aniversário? (sim/nao): ").lower()
 
-eh_final_de_semana = dia_str.lower() == "sim"
-eh_feriado = feriado_str.lower() == "sim"
+eh_estudante = estudante_str == "sim"
+eh_aniversario = aniversario_str == "sim"
 
-if eh_final_de_semana or eh_feriado:
-    print("Oba! Dia de descanso!")
+if eh_estudante or eh_aniversario:
+    print("Parabéns! Você tem direito a um desconto.")
 else:
-    print("Dia normal de trabalho ou estudo.")
+    print("Nenhum desconto aplicável no momento.")
  ```
 
 ### Operador `not` (NÃO)
@@ -225,11 +225,7 @@ idade = 20
 tem_convite = True
 lista_vip = False
 
-# Exemplo: Para entrar na festa, precisa ter convite OU estar na lista VIP, E ser maior de 18.
-# A forma como está escrito abaixo pode ser ambígua sem parênteses para alguns leitores:
-# if tem_convite or lista_vip and idade >= 18: (o 'and' seria avaliado primeiro)
-
-# Com parênteses para clareza (e para garantir a lógica desejada):
+# Exemplo: Para entrar na festa, precisa (ter convite OU estar na lista VIP) E ser maior de 18.
 if (tem_convite or lista_vip) and idade >= 18:
     print("Entrada permitida na festa!")
 else:
@@ -292,17 +288,21 @@ else:
 idade = int(input("Qual sua idade? "))
 estudante_str = input("Você é estudante (sim/nao)? ").lower()
 
-if idade < 18:
-    print("Você tem direito a meio ingresso (menor de idade).")
-elif idade >= 18 and idade <= 60:
+if idade < 12: # Crianças
+    preco_ingresso = 8.00
+    print(f"Ingresso infantil: R${preco_ingresso:.2f}")
+elif idade >= 12 and idade < 60: # Jovens e Adultos
     if estudante_str == "sim":
-        print("Você tem direito a meio ingresso (estudante).")
+        preco_ingresso = 10.00
+        print(f"Ingresso estudante: R${preco_ingresso:.2f}")
     else:
-        print("Você paga ingresso normal.")
-else: # Maiores de 60
-    print("Você tem direito a meio ingresso (idoso).")
+        preco_ingresso = 20.00
+        print(f"Ingresso normal: R${preco_ingresso:.2f}")
+else: # Maiores de 60 (Idosos)
+    preco_ingresso = 7.50
+    print(f"Ingresso sênior: R${preco_ingresso:.2f}")
  ```
-No exemplo acima, a verificação se é estudante só acontece se a pessoa tiver entre 18 e 60 anos.
+No exemplo acima, a verificação se é estudante (e o respectivo preço) só acontece se a pessoa tiver entre 12 e 59 anos.
 
 * **Cuidado:** Condicionais aninhadas podem tornar o código complexo e difícil de ler se houver muitos níveis. Use com moderação. Muitas vezes, uma estrutura `if-elif-else` bem planejada ou o uso de operadores lógicos pode evitar aninhamentos desnecessários.
 
@@ -319,14 +319,18 @@ idade = 20
 
 # Usando if-else tradicional
 # if idade >= 18:
-#     status = "Maior de idade"
+#     status_idade = "Maior de idade"
 # else:
-#     status = "Menor de idade"
+#     status_idade = "Menor de idade"
 
 # Usando expressão condicional (ternário)
-status = "Maior de idade" if idade >= 18 else "Menor de idade"
+status_idade = "Maior de idade" if idade >= 18 else "Menor de idade"
 
-print(status) # Saída: Maior de idade
+print(status_idade) # Saída: Maior de idade
+
+pontuacao = 75
+mensagem_bonus = "Bônus!" if pontuacao > 90 else "Sem bônus."
+print(mensagem_bonus) # Saída: Sem bônus.
  ```
 Isso pode ser útil para atribuições simples, mas para lógicas mais complexas, a estrutura `if-else` tradicional é mais legível.
 
@@ -350,8 +354,42 @@ Com as estruturas condicionais, seus programas agora podem reagir de maneiras di
 
 ## Exercícios Práticos
 
-1.  **Classificador de Número:** Peça ao usuário para digitar um número. Use `if-elif-else` para imprimir se o número é "Positivo", "Negativo" ou "Zero".
-2.  **Calculadora Simples Melhorada:** Peça ao usuário dois números e depois qual operação ele deseja realizar (ex: "soma", "subtracao", "multiplicacao", "divisao"). Use `if-elif-else` para realizar a operação escolhida e imprimir o resultado. Se a operação for divisão, verifique se o segundo número é zero antes de dividir; se for, imprima uma mensagem de erro apropriada (ex: "Não é possível dividir por zero.").
-3.  **Verificador de Vogal ou Consoante:** Peça ao usuário para digitar uma única letra. Use `if-elif-else` e operadores lógicos para determinar se a letra é uma vogal (a, e, i, o, u - considere maiúsculas e minúsculas) ou uma consoante. Imprima o resultado.
-4.  **Faixa Etária:** Peça a idade de uma pessoa. Use `if-elif-else` para classificá-la em uma das seguintes faixas: "Criança" (0-12 anos), "Adolescente" (13-17 anos), "Adulto" (18-59 anos), "Idoso" (60 anos ou mais).
-5.  **Adivinhe o Animal (Simples):** Crie um mini-jogo. Pense em um animal. Faça duas perguntas de sim/não ao usuário sobre características do animal (ex: "O animal que estou pensando vive na água? (sim/nao)", "Ele tem pelos? (sim/nao)"). Com base nas respostas, tente "adivinhar" se o animal é o que você pensou usando `if-elif-else` e operadores lógicos. Se não for, diga que você não sabe qual é. (Ex: Se vive na água e não tem pelos, pode ser um peixe).
+1.  **Verificador de Positividade:** Peça ao usuário para digitar um número. Se o número for maior que zero, imprima "Este número é positivo!". (Use um `if` simples).
+2.  **Desconto Sênior:** Peça a idade do usuário. Se a idade for 60 anos ou mais, imprima "Você tem direito ao desconto para idosos!". Caso contrário, imprima "Você não se qualifica para o desconto para idosos no momento." (Use `if-else`).
+3.  **Termômetro do Dia:** Peça ao usuário a temperatura ambiente em Celsius.
+    * Se a temperatura for menor que 15, imprima "Está frio!".
+    * Se a temperatura estiver entre 15 (inclusive) e 25 (inclusive), imprima "Temperatura agradável.".
+    * Se a temperatura for maior que 25, imprima "Está calor!". (Use `if-elif-else`).
+4.  **Bônus de Jogo:** Para desbloquear um bônus, um jogador precisa ter mais de 1000 pontos **E** estar no nível 5 ou superior. Peça ao usuário seus pontos (inteiro) e seu nível (inteiro). Imprima "Bônus desbloqueado!" se ambas as condições forem verdadeiras, ou "Requisitos para bônus não atendidos." caso contrário. (Use `if-else` com o operador `and`).
+5.  **Elegibilidade para Frete Grátis:** Uma loja online oferece frete grátis se o valor total da compra for superior a R$ 100,00 **OU** se o cliente for um membro VIP. Peça ao usuário o valor da compra (`float`) e se ele é um membro VIP (peça para digitar 'sim' ou 'nao'). Imprima "Frete Grátis!" se pelo menos uma das condições for atendida, caso contrário, imprima "Custo de frete será aplicado." (Use `if-else` com o operador `or`).
+6.  **Verificador de Cupom:** Pergunte ao usuário se ele possui um cupom de desconto (peça para digitar 'sim' ou 'nao'). Se ele **NÃO** possuir um cupom, imprima uma mensagem como "Procure nossos cupons na próxima compra para economizar!". Caso contrário (se ele tem o cupom), imprima "Ótimo! Não se esqueça de aplicar seu cupom no caixa." (Use `if-else` com o operador `not`).
+7.  **Preço do Ingresso de Cinema:** O preço base de um ingresso é R$20,00.
+    * Se for quarta-feira (dia de promoção), o ingresso custa metade do preço base (R$10,00) para **todos**.
+    * Se **NÃO** for quarta-feira:
+        * Crianças (menores de 12 anos) pagam 40% do preço base (R$8,00).
+        * Idosos (60 anos ou mais) pagam 50% do preço base (R$10,00).
+        * Os demais pagam o preço base (R$20,00).
+    Peça ao usuário sua idade (inteiro) e se hoje é quarta-feira (peça para digitar 'sim' ou 'nao'). Calcule e imprima o preço final do ingresso. (Use `if-elif-else` e, possivelmente, `if` aninhado ou mais operadores lógicos).
+8.  **Elegibilidade para Bolsa de Estudos:** Um aluno é elegível para uma bolsa de estudos se atender aos seguintes critérios: ter uma renda familiar mensal abaixo de R$2000,00 **E** (ter uma nota no exame de admissão acima de 700 pontos **OU** apresentar um histórico escolar considerado 'excelente'). Peça ao usuário para informar a renda familiar (`float`), a nota do exame (`int`) e se o histórico escolar é excelente (peça para digitar 'sim' ou 'nao'). Imprima "Elegível para bolsa" ou "Não elegível para bolsa". (Use operadores `and` e `or`, e possivelmente parênteses para garantir a ordem correta da lógica).
+9.  **Quiz de Elementos Mágicos:** Crie um pequeno quiz para descobrir qual elemento mágico representa o usuário.
+    * Pergunte: "Você prefere o dia ou a noite? (digite 'dia' ou 'noite')".
+    * Pergunte: "Você se considera uma pessoa mais calma ou agitada? (digite 'calma' ou 'agitada')".
+    Use `if-elif-else` para determinar o elemento:
+        * Se for 'dia' E 'calma': "Você se parece com o elemento Terra! Estável e confiável."
+        * Se for 'dia' E 'agitada': "Você se parece com o elemento Ar! Livre e perspicaz."
+        * Se for 'noite' E 'calma': "Você se parece com o elemento Água! Intuitiva e adaptável."
+        * Se for 'noite' E 'agitada': "Você se parece com o elemento Fogo! Apaixonada e enérgica."
+        * Para qualquer outra combinação de respostas, imprima: "Você é uma combinação misteriosa de elementos!"
+10. **Desafio do Jogo: Pedra, Papel e Tesoura!**
+    Crie uma versão simples do jogo Pedra, Papel e Tesoura contra o "computador".
+    1.  Defina a escolha do computador em uma variável no início do seu código. Por exemplo: `escolha_computador = "pedra"`. (Mantenha essa escolha fixa por enquanto, para simplificar).
+    2.  Peça ao jogador para fazer sua escolha: "Escolha pedra, papel ou tesoura: ". Converta a entrada do jogador para letras minúsculas usando `.lower()` para facilitar as comparações.
+    3.  Use estruturas `if-elif-else` (e operadores `and`/`or` se necessário) para comparar a escolha do jogador com a do computador e determinar o resultado:
+        * Se as escolhas forem iguais, é um empate.
+        * Lembre-se das regras de vitória:
+            * Pedra ganha de Tesoura (`jogador == "pedra" and computador == "tesoura"`)
+            * Tesoura ganha de Papel (`jogador == "tesoura" and computador == "papel"`)
+            * Papel ganha de Pedra (`jogador == "papel" and computador == "pedra"`)
+        * Em todos os outros casos onde não há empate e o jogador não ganhou, o computador ganhou.
+    4.  Imprima uma mensagem clara indicando a escolha de cada um e o resultado (Ex: "Você escolheu [escolha_jogador], o computador escolheu [escolha_computador]. Você Ganhou!").
+    5.  (Opcional) Adicione uma verificação no início para ver se o jogador digitou uma opção válida ('pedra', 'papel', ou 'tesoura'). Se não, imprima uma mensagem de erro.
