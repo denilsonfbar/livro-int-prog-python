@@ -10,6 +10,7 @@
 
 **Parte 2: Controlando o Fluxo do Programa**
 * [Capítulo 3: Tomando Decisões: Estruturas Condicionais](03-Condicionais.md)
+* [Exercícios de revisão](03.2-Exercicios-revisao.md)
 * [Capítulo 4: Repetindo Tarefas: Estruturas de Repetição (Loops)](04-Loops.md)
 
 **Parte 3: Organizando Dados e Código**
